@@ -68,18 +68,22 @@ public class AanmeldingResource {
 		String gerechtId = object.getString("gerechtId");
 		String date = object.getString("datum");
 		
+		System.out.println(lidnummer + " Dit is het lidnummer");
+		
 		Gerecht gerechtTest = gerechtService.getByNaamDate(gerechtId, date);
 		
 		int lidnummerInt = Integer.parseInt(lidnummer);
 		int gerechtIdInt = gerechtTest.getId();
+		
+		System.out.println(gerechtIdInt + "Hier werkt het nog");
 		
 		Lid eter = lidService.getLidByNum(lidnummerInt);
 		Gerecht keuze = gerechtService.getNaamById(gerechtIdInt);
 		
 		Aanmelding newAanmelding = new Aanmelding(eter, keuze);
 		
-		System.out.println(eter);
-		System.out.println(keuze);
+		System.out.println(eter	+ " Dit is de eter");
+		System.out.println(keuze + " Dit is de keuze");
 		
 		if (aanmeldingService.save(newAanmelding) == true) {
 			JsonObjectBuilder job = Json.createObjectBuilder();

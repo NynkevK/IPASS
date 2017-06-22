@@ -41,8 +41,10 @@ public class GerechtDAO extends BaseDAO{
 			while(rs.next()) {
 				String naam = rs.getString("naam");
 				String datum = rs.getString("datum");
+				int id = rs.getInt("id");
 				
 				Gerecht newGerecht = new Gerecht(datum, naam);
+				newGerecht.setId(id);
 				
 				results.add(newGerecht);
 			}
@@ -88,11 +90,11 @@ public class GerechtDAO extends BaseDAO{
 	
 	// Deze methode geeft de naam van een gerecht bij zijn id
 	public Gerecht getNaamById(int id) {
-		List<Gerecht> results = getAlleGerechten("SELECT naam FROM gerecht WHERE id = " + id + ";");
+		List<Gerecht> results = getAlleGerechten("SELECT * FROM gerecht WHERE id = " + id + ";");
 		if (results.size() == 0) {
 			return null;
 		} else {
-			return getAlleGerechten("SELECT naam FROM gerecht WHERE id = " + id + ";").get(0);
+			return results.get(0);
 		}
 	}
 	
@@ -102,17 +104,20 @@ public class GerechtDAO extends BaseDAO{
 		
 		try (Connection con = super.getConnection()) {
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT * FROM gerecht WHERE datum = '" + datum + "' AND naam = '" + naam + "';");
+			ResultSet rs = stmt.executeQuery("SELECT * FROM gerecht WHERE (datum = '" + datum + "') AND (naam = '" + naam + "');");
 			
 			while(rs.next()) {
 				String name = rs.getString("naam");
 				String date = rs.getString("datum");
+				int id = rs.getInt("id");
 				
 				System.out.println("GerechtDAO:");
 				System.out.println(name);
 				System.out.println(date);
+				System.out.println(id);
 				
 				Gerecht newGerecht = new Gerecht(date, name);
+				newGerecht.setId(id);
 				
 				results = newGerecht;
 			}
