@@ -3,7 +3,7 @@ role = undefined;
 $("#login").click(function(event){
     var data = $("#loginform").serialize();
 
-    $.post("/ipass/restservices/authentication", data, function(response){
+    $.post("/restservices/authentication", data, function(response){
         window.sessionStorage.setItem("sessionToken", response);
         console.log(response);
         console.log("login succes");
