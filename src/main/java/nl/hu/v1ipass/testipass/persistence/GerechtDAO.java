@@ -10,8 +10,10 @@ import java.util.List;
 import nl.hu.v1ipass.testipass.model.*;
 
 public class GerechtDAO extends BaseDAO{
+	// Connectie met de andere benodigde DAO
 	private LidDAO lidDAO = new LidDAO();
 	
+	// Met deze methode wordt een nieuw gerecht aan de database toegevoegd. Deze methode wordt niet gebruikt
 	public Gerecht save(Gerecht gerecht){
         String query = "INSERT INTO gerecht(name, datum, lidNummer) VALUES ('"
                 + gerecht.getName() + "', '"
@@ -28,6 +30,7 @@ public class GerechtDAO extends BaseDAO{
         return (gerecht);
     }
 	
+	// Deze methode haalt alle gerechten op uit de database die vallen onder de ingevoerde query
 	public List<Gerecht> getAlleGerechten (String query) {		
 		List<Gerecht> results = new ArrayList<Gerecht>();
 		
@@ -50,10 +53,13 @@ public class GerechtDAO extends BaseDAO{
 		return results;
 	}
 	
+	// Deze methode haal alles van alle gerechten uit de database, zoals te lezen in de query.
 	public List<Gerecht> alleGerechten() {
 		return getAlleGerechten("SELECT * FROM gerecht;");
 	}
 	
+	// Met deze methode kan je alle gerechten uit de database halen die horen bij een bepaalde datum.
+	// Deze methode wordt gebruikt om alle aanmeldingen te laten zien als de admin hierom vraagt.
 	public List<Gerecht> getGerechtenByDate (String datum) {		
 		List<Gerecht> results = new ArrayList<Gerecht>();
 		
@@ -80,6 +86,7 @@ public class GerechtDAO extends BaseDAO{
 		return results;
 	}
 	
+	// Deze methode geeft de naam van een gerecht bij zijn id
 	public Gerecht getNaamById(int id) {
 		List<Gerecht> results = getAlleGerechten("SELECT naam FROM gerecht WHERE id = " + id + ";");
 		if (results.size() == 0) {
@@ -89,6 +96,7 @@ public class GerechtDAO extends BaseDAO{
 		}
 	}
 	
+	// Deze methode geeft de gerechtId van een gerecht met een bepaalde naam en bijbehorende datum.
 	public Gerecht getIdByNaamDatum(String naam, String datum) {
 		Gerecht results = null;
 		

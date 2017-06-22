@@ -68,7 +68,7 @@ $("#opslaan").click(function(event){
     var JSONdata = JSON.stringify(data);
     console.log(JSONdata);
     
-//    $.post("/ipass/restservices/aanmeldingen", JSONdata, function(response){
-//    	console.log("succesvol aangemeld");
-//    });
+    $.post("/ipass/restservices/aanmeldingen", JSONdata, function(response){
+    	console.log("succesvol aangemeld");
+    });
 });

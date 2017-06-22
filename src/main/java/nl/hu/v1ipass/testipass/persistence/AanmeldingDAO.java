@@ -10,9 +10,11 @@ import java.util.List;
 import nl.hu.v1ipass.testipass.model.*;
 
 public class AanmeldingDAO extends BaseDAO {
+	// Connectie met andere benodigde DAO's
 	private LidDAO lidDAO = new LidDAO();
 	private GerechtDAO gerechtDAO = new GerechtDAO();
 	
+	// Methode om aanmeldingen op te halen door middel van de ingevoerde query
 	public List<Aanmelding> alleAanmeldingen (String query) {
 		List<Aanmelding> results = new ArrayList<Aanmelding>();
 		
@@ -39,6 +41,7 @@ public class AanmeldingDAO extends BaseDAO {
 		return results;
 	}
 	
+	// Alle aanmeldingen die horen bij een bepaalde datum worden hier opgehaald
 	public List<Aanmelding> getAanmeldingByDate (String datum) {
 		List<Aanmelding> results = new ArrayList<Aanmelding>();
 		
@@ -51,6 +54,7 @@ public class AanmeldingDAO extends BaseDAO {
 				String lidnaam = rs.getString("lidnaam");
 				String gerechtId = rs.getString("gerechtnaam");
 				
+				// Print statements voor controle en debugging en testing
 				System.out.println("AanmeldingDAO:");
 				System.out.println(lidnummer);
 				System.out.println(lidnaam);
@@ -70,10 +74,12 @@ public class AanmeldingDAO extends BaseDAO {
 		return results;
 	}
 	
+	// Alle aanmeldingen ophalen uit de database zoals te lezen in de query
 	public List<Aanmelding> getAlleAanmeldingen () {
 		return alleAanmeldingen("SELECT * FROM aanmelding;");
 	}
 
+	// Een methode om een nieuwe aanmelding toe te voegen aan de database, echter deze wordt niet meer gebruikt
 	public Aanmelding save(int lidnummer, int gerechtid) throws SQLException {
 		String query = "INSERT INTO aanmelding (\"lidnummer\", \"gerechtid\" VALUES ( '" + lidnummer + "', '" + gerechtid + "');";
 		try (Connection con = super.getConnection()) {
@@ -91,6 +97,9 @@ public class AanmeldingDAO extends BaseDAO {
 		return newAanmelding;
 	}
 	
+	// De methode die wordt aangeroepen bij de POST om een nieuwe aanmelding aan de database toe te voegen.
+	// Echter wordt er ergens naar null verwezen en komt hier een NullPointerEsception uit, waardoor de POST methode
+	// niet werkt en een HTTP 500 error geeft.
 	public boolean addAanmelding (Aanmelding a) {
 		
 		System.out.println(a);

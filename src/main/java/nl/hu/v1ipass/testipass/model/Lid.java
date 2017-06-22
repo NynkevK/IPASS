@@ -1,5 +1,6 @@
 package nl.hu.v1ipass.testipass.model;
 
+// Lid POJO
 public class Lid {
 	private String name;
 	private int lidNummer;

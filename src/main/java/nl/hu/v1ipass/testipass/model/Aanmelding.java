@@ -1,5 +1,6 @@
 package nl.hu.v1ipass.testipass.model;
 
+// Aanmelding POJO
 public class Aanmelding {
 	private int aanmeldingId;
 	private Lid eter;

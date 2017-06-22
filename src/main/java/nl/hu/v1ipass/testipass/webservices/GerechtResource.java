@@ -24,6 +24,8 @@ import nl.hu.v1ipass.testipass.persistence.*;
 @Path("/gerechten")
 public class GerechtResource {
 	
+	// Dit is een algemene methode om makkelijk Json objecten te maken en voorkomt redundante code,
+	// echter vond ik dit niet fijn en heb ik het alsnog in elke methoe apart gezet.
 	private JsonObjectBuilder gerechtToJson(Gerecht gerecht){
         JsonObjectBuilder job = Json.createObjectBuilder();
         job.add("datum", gerecht.getDatum())
@@ -31,6 +33,7 @@ public class GerechtResource {
         return job;
 	}
 	
+	// Deze methodde haalt alle gerechten van een bepaalde dag op uit de database
 	@GET
 	@Path("{datum}")
 	@Produces("application/json")

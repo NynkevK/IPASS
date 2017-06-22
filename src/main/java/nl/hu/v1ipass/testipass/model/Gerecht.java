@@ -1,5 +1,6 @@
 package nl.hu.v1ipass.testipass.model;
 
+// Gerecht POJO
 public class Gerecht {
 	private int id;
 	private String datum;
@@ -10,8 +11,8 @@ public class Gerecht {
 		this.name = name;
 	}
 
-	public Gerecht(String gerechtId) {
-		this.name = gerechtId;
+	public Gerecht(String naam) {
+		this.name = naam;
 	}
 
 	public int getId() {

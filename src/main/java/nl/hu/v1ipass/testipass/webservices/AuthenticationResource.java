@@ -21,6 +21,7 @@ import nl.hu.v1ipass.testipass.persistence.*;
 public class AuthenticationResource {
     final static public Key key = MacProvider.generateKey();
      
+    // Deze methode regelt de login op de login pagina
     @POST
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     public Response authenticateUser(@FormParam("username") String username,

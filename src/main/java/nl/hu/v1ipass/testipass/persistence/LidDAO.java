@@ -7,6 +7,9 @@ import java.util.List;
 import nl.hu.v1ipass.testipass.model.Lid;
 
 public class LidDAO extends BaseDAO{	
+	
+	//Deze methode wordt gebruikt bij het inloggen. De username en wachtwoord worden opgehaald uit de
+	// database om te kunnen controleren in de resource en het filter.
 	public String findRoleForUsernameAndPassword (String username, String password) {
 		 String role = null;
 	     String query = "SELECT role FROM lid WHERE username = ? AND password = ?";
@@ -29,6 +32,7 @@ public class LidDAO extends BaseDAO{
 	     return role;
 	}
 	
+	// Met deze methode kan je alle leden die voldoen aan de ingevulde query uit de database halen.
 	public List<Lid> getAlleLeden (String query) {		
 		List<Lid> results = new ArrayList<Lid>();
 		
@@ -51,10 +55,12 @@ public class LidDAO extends BaseDAO{
 		return results;
 	}
 	
+	// Deze methode haalt alles van alle leden op uit de database, zoals te lezen in de query.
 	public List<Lid> alleLeden() {
 		return getAlleLeden("SELECT * FROM lid;");
 	}
 	
+	// Deze methode geeft het Lid dat hoort bij een bepaald nummer, om zo de naam oid eruit de kunnen selecteren.
 	public Lid getLidByNummer(int nummer) {		
 		Lid result = null;
 		
@@ -82,6 +88,8 @@ public class LidDAO extends BaseDAO{
         
 	}
 	
+	// Deze methode haalt de rol van een bepaald user op. Deze methode wordt gebruikt als 
+	// alternatieve authenticatie, omdat het "@RolesAllowed" principe niet werkte.
 	public String getRoleByUsername(String username){
 		String result = "";
 		
@@ -101,6 +109,9 @@ public class LidDAO extends BaseDAO{
 		return result;
 	}
 	
+	// Deze methode geeft alle leden die zich hebben opgegeven voor het eten.
+	// Dit is echter een verouderde methode die niet meer wordt gebruikt, ook omdat de database
+	// anders is geworden.
 	public List<Lid> getLedenByDate(String datum) {
 		return getAlleLeden("SELECT lidnummer FROM gerecht WHERE datum = " + datum + ";");
 	}

@@ -24,10 +24,13 @@ import nl.hu.v1ipass.testipass.persistence.LidDAO;
 
 @Path("/aanmeldingen")
 public class AanmeldingResource {
-	LidDAO lidDAO = new LidDAO();
-	GerechtDAO gerechtDAO = new GerechtDAO();
-	AanmeldingService service = ServiceProvider.getAanmeldingService();
+	// Hier wordt de connectie met de verschillende services, en dus met hun DAO's gemaakt om te kunnen gebruiken binnen de klasse.
+	private LidService lidService = ServiceProvider.getLidService();
+	private GerechtService gerechtService = ServiceProvider.getGerechtService();
+	private AanmeldingService aanmeldingService = ServiceProvider.getAanmeldingService();
 	
+	// Dit is een algemene methode om makkelijk Json objecten te maken en voorkomt redundante code,
+	// echter vond ik dit niet fijn en heb ik het alsnog in elke methoe apart gezet.
 	private JsonObjectBuilder aanmeldingToJson(Aanmelding aanmelding) {
 		JsonObjectBuilder job = Json.createObjectBuilder();
 		job.add("lidnummer", aanmelding.getEter().getLidNummer());
@@ -37,6 +40,7 @@ public class AanmeldingResource {
 		return job;
 	}
 	
+	// Deze GET methode haalt alle aanmeldingen voor een bepaald datum op via de service en dus ook de DAO.
 	@GET
 	@Path("{datum}")
 	@Produces("application/json")
@@ -52,6 +56,8 @@ public class AanmeldingResource {
 		return array.toString();
 	}
 	
+	// Deze methode moet ervoor zorgen dat een aanmelding in de database terechtkomt,
+	// Echter geeft deze een NullPointerException vanaf gerechtTest
 	@POST
 	@Produces("application/json")
 	public String addAanmelding(InputStream is) throws SQLException {		
@@ -62,25 +68,27 @@ public class AanmeldingResource {
 		String gerechtId = object.getString("gerechtId");
 		String date = object.getString("datum");
 		
-		Gerecht gerechtTest = gerechtDAO.getIdByNaamDatum(gerechtId, date);
+		Gerecht gerechtTest = gerechtService.getByNaamDate(gerechtId, date);
 		
 		int lidnummerInt = Integer.parseInt(lidnummer);
 		int gerechtIdInt = gerechtTest.getId();
 		
-		Lid eter = lidDAO.getLidByNummer(lidnummerInt);
-		Gerecht keuze = gerechtDAO.getNaamById(gerechtIdInt);
+		Lid eter = lidService.getLidByNum(lidnummerInt);
+		Gerecht keuze = gerechtService.getNaamById(gerechtIdInt);
 		
 		Aanmelding newAanmelding = new Aanmelding(eter, keuze);
 		
 		System.out.println(eter);
 		System.out.println(keuze);
 		
-		service.save(newAanmelding);
-		
-		JsonObjectBuilder job = Json.createObjectBuilder();
-		job.add("lidnummer", lidnummer);
-		job.add("gerechtId", gerechtId);
-		
-		return job.build().toString();
+		if (aanmeldingService.save(newAanmelding) == true) {
+			JsonObjectBuilder job = Json.createObjectBuilder();
+			job.add("lidnummer", lidnummer);
+			job.add("gerechtId", gerechtId);
+			
+			return job.build().toString();
+		} else {
+			return null;
+		}
 	}
 }

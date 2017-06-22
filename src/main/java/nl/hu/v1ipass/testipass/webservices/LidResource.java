@@ -24,6 +24,8 @@ import nl.hu.v1ipass.testipass.model.*;
 @Path("/leden")
 public class LidResource {
 	
+	// Dit is een algemene methode om makkelijk Json objecten te maken en voorkomt redundante code,
+	// echter vond ik dit niet fijn en heb ik het alsnog in elke methoe apart gezet.
 	private JsonObjectBuilder lidToJson(Lid lid){
         JsonObjectBuilder job = Json.createObjectBuilder();
         job.add("name", lid.getName())
@@ -31,6 +33,7 @@ public class LidResource {
         return job;
     }
 	
+	// Deze methode haalt de username van degene die inlogt op om zo achter de betreffende rol te komen voor de autorisatie.
 	@GET
 	@Path("{username}")
 	@Produces("application/json")

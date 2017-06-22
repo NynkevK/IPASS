@@ -3,6 +3,7 @@ package nl.hu.v1ipass.testipass.webservices;
 import java.security.*;
 import javax.ws.rs.core.*;
 
+//Van deze klasse weet ik niet zoveel, omdat deze is overgenomen vanuit het WAC werkboek.
 public class MySecurityContext implements SecurityContext {
 	private String name;
     private String role;
