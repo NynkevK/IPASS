@@ -103,7 +103,7 @@ public class AanmeldingDAO extends BaseDAO {
 		System.out.println(eter);
 		System.out.println(id);
 		
-		 String query = "INSERT INTO aanmelding (\"lidnummer\", \"gerechtid\") VALUES (" + eter + ", " + id + ";";
+		 String query = "INSERT INTO aanmelding (\"lidnummer\", \"gerechtid\") VALUES (" + eter + ", " + id + ");";
 	         
 	        try (Connection con = super.getConnection()){
 	            Statement stmt = con.createStatement();
