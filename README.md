@@ -10,4 +10,4 @@ De deployment op Heroku is tot mijn spijt ook niet gelukt, omdat PgAdmin 4 van P
 Ethische verantwoording:
 - De front-end is gebaseerd op de UIT website van Unitas S.R. (www.usr.nl/uit)
 - Voor de front-end heb ik gebruik gemaakt van het CSS framework Bootstrap (www.getbootstrap.com)
-- De back-end is gerealiseerd op de manier die we bij WAC geleerd hebben. Omdat ons veel is aangereikt, kunnen grote delen overeekomen met hetgeen in het werkboek van WAC staat, en dus ook met werk van medeleerlingen.
+- De back-end is gerealiseerd op de manier die we bij WAC geleerd hebben. Omdat ons veel is aangereikt, kunnen grote delen overeekomen met hetgeen in het werkboek van WAC staat, en dus ook met werk van medeleerlingen. Mede hierdoor is alles ook niet echt bepaald veilig...
