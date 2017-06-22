@@ -5,6 +5,8 @@ Welkom bij mijn IPASS project. Voor dit project heb ik een webapplicatie gemaakt
 De belangrijkste pagina, waar eigenlijk alle actie gebeurt is de login pagina. Hier zijn alle use cases verwerkt. Ik heb een aantal GET methodes verwerkt om hetgeen ik nodig had uit de database op te halen. Daarnaast moest ik een POST methode realiseren. Deze geeft echter een HTTP 500 error, waardoor hij niet optimaal werkt. Hij krijgt alle info wel goed mee, maar kan het niet in de database zetten.
 Wegens tijdtekort heb ik dit helaas niet meer kunnen fixen.
 
+De deployment op Heroku is tot mijn spijt ook niet gelukt, omdat PgAdmin 4 van PostgresQL problemen gaf hiermee.
+
 Ethische verantwoording:
 - De front-end is gebaseerd op de UIT website van Unitas S.R. (www.usr.nl/uit)
 - Voor de front-end heb ik gebruik gemaakt van het CSS framework Bootstrap (www.getbootstrap.com)
