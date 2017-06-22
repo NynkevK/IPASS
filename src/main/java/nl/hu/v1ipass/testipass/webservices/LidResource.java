@@ -30,4 +30,17 @@ public class LidResource {
         	.add("lidNummer", lid.getLidNummer());
         return job;
     }
+	
+	@GET
+	@Path("{username}")
+	@Produces("application/json")
+	public String getRoleByUsername(@PathParam("username") String username) {
+		LidService service = ServiceProvider.getLidService();
+		JsonObjectBuilder job = Json.createObjectBuilder();
+		
+		String role = service.getRole(username);
+		
+		job.add("role", role);
+		return job.build().toString();		
+	}
 }

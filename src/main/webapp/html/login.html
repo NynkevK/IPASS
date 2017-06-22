@@ -71,7 +71,7 @@
             <h1>Login</h1>
             <form id="loginform" onsubmit="return false">
               <label for=""><input type="text" name="username" placeholder="Gebruikersnaam"></label><br>
-              <label for=""><input type="text" name="password" placeholder="Wachtwoord"></label><br>
+              <label for=""><input type="password" name="password" placeholder="Wachtwoord"></label><br>
               <input type="button" value="Login" id="login">
             </form>
 
@@ -82,30 +82,29 @@
               <div class="col-xs-12 col-sm-4 col-md-4">
                 <a id="ledeneten_opgeven"><h2 class="blok"><span class="glyphicon glyphicon-cutlery"></span> Opgeven ledeneten</h2></a>
                 <div id="ledeneten_opgeven_form">
-                  <form id="opgeven_ledeneten">
-                  	<label>Lidnummer: <input type="text" name="lidnummer"/></label>
-                  	<label>Kies een datum: <input type="date" name="datum"/></label>
-                  	<label>Beschikbare gerechten:</label><br>
-                  	<label><span id="gerecht1"></span>&nbsp;<input type="radio" name="gerecht" value="gerecht1"></label><br>
-                    <label><span id="gerecht2"></span>&nbsp;<input type="radio" name="gerecht" value="gerecht2"></label><br>
-                    <label><span id="gerecht3"></span>&nbsp;<input type="radio" name="gerecht" value="gerecht3"></label><br>
-                    <input type="button" name="opslaan" value="Opslaan">
-                  </form>
+                  <form id="datum_kiezen">
+                  	<label>Lidnummer: <input type="text" id="lidnummer_input"/></label>
+                  	<label>Kies een datum: <input type="date" id="datum_opgeven_ledeneten"/></label>
+                  	<input type="button" id="kies_datum" value="Kies deze datum"/>
+                 </form>                 
+                 <label>Beschikbare gerechten:</label><br>
+                 <form id="opgeven_ledeneten">
+                 </form>
+                  <input type="button" id="opslaan" value="Opslaan">
                 </div>
               </div>
               <div class="col-xs-12 col-sm-4 col-md-4">
                 <a id="ledeneten_inzien"><h2 class="blok"><span class="glyphicon glyphicon-cutlery"></span> Ledeneten inzien</h2></a>
                 <div id="ledeneten_inzien_form">
                   <form id="inzien_ledeneten">
-                    <label>Kies een datum: <input type="date" name="datum"></label>
-                    <label>De volgende mensen hebben zich opgegeven op datum: </label>
-                    <table>
-                      <th>Lidnummer</th>
+                    <label>Kies een datum: <input type="date" id="date"></label>                   
+                    <input type="button" id="show" value="Laat zien">
+                  </form>
+                  <label>De volgende mensen hebben zich opgegeven op datum: </label> 
+                  <table id="aanmeldingen_tabel">
                       <th>Naam</th>
                       <th>Gekozen gerecht</th>
                     </table>
-                    <input type="button" name="show" value="Laat zien">
-                  </form>
                 </div>
               </div>
             </div>

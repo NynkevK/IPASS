@@ -23,36 +23,27 @@ import nl.hu.v1ipass.testipass.persistence.*;
 
 @Path("/gerechten")
 public class GerechtResource {
-	private LidDAO lidDAO = new LidDAO();
 	
 	private JsonObjectBuilder gerechtToJson(Gerecht gerecht){
         JsonObjectBuilder job = Json.createObjectBuilder();
-        job.add("id", gerecht.getId())
-        	.add("datum", gerecht.getDatum())
-        	.add("name", gerecht.getName())
-        	.add("betaling", gerecht.getBetaling());
+        job.add("datum", gerecht.getDatum())
+        	.add("name", gerecht.getName());
         return job;
 	}
 	
-	@POST
-	@RolesAllowed({"user", "admin"})
-	public Response addEter (@FormParam("lidNummer") int lidNummer, @FormParam("name") String gerecht, @FormParam("datum") String datum) {
-		GerechtService service = ServiceProvider.getGerechtService();
-        
-        int lidNummerInt = (lidNummer);
-        String gerechtString = (gerecht);
-        String datumString = (datum);	
-        
-        Lid eter = lidDAO.getLidByNummer(lidNummerInt);
-         
-        Gerecht newGerecht = new Gerecht(datumString, gerechtString, eter);
-        
-        if(service.addGerecht(newGerecht) == null){
-            Gerecht returnGerecht = service.addGerecht(newGerecht);
-            String a = gerechtToJson(returnGerecht).build().toString();
-            return Response.ok(a).build();
-        } else {
-            return Response.status(Response.Status.FOUND).build();
-        }
+	@GET
+	@Path("{datum}")
+	@Produces("application/json")
+	public String getAanmeldingen(@PathParam("datum")String datum) {
+		GerechtService service = ServiceProvider.getGerechtService();		
+		JsonArrayBuilder jab = Json.createArrayBuilder();
+		
+		for (Gerecht g : service.getGerechtByDate(datum)){ 
+			jab.add(gerechtToJson(g));
+			System.out.println(g);
+		}
+		
+		JsonArray array = jab.build();
+		return array.toString();
 	}
 }

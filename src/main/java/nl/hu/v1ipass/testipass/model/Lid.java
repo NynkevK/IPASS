@@ -7,19 +7,10 @@ public class Lid {
 	private String password;
 	private String role;
 	
-//	private int telefoonNummer;
-//	private String emailAdres;
-//	private String adres;
-//	private int jaar;
-//	private String jaarclub;
-	
-	public Lid(String name, int lidNummer, String username, String password, String role) {
+	public Lid(String name, int lidNummer) {
 		super();
 		this.name = name;
 		this.lidNummer = lidNummer;
-		this.username = username;
-		this.password = password;
-		this.role = role;
 	}
 
 	public String getName() {

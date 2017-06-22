@@ -18,7 +18,7 @@ public class AanmeldingService {
 		return aanmeldingDAO.getAanmeldingByDate(datum);
 	}
 	
-	public Aanmelding addAanmelding(int lidnummer, int gerechtid) throws SQLException {
-		return aanmeldingDAO.save(lidnummer, gerechtid);
+	public boolean save(Aanmelding a) throws SQLException {
+		return aanmeldingDAO.addAanmelding(a);
 	}
 }

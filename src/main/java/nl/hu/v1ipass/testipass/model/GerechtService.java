@@ -12,19 +12,15 @@ public class GerechtService {
 		return gerechtDAO.save(g);
 	}
 	
-	public Gerecht updateGerecht(Gerecht g) {
-		return gerechtDAO.update(g);
-	}
-	
-	public boolean deleteGerecht(Gerecht g) {
-		return gerechtDAO.delete(g);
-	}
-	
 	public List<Gerecht> alleGerechten() {
 		return gerechtDAO.alleGerechten();
 	}
 	
 	public List<Gerecht> getGerechtByDate(String datum) {
 		return gerechtDAO.getGerechtenByDate(datum);
+	}
+	
+	public Gerecht getByNaamDate (String naam, String datum) {
+		return gerechtDAO.getIdByNaamDatum(naam, datum);
 	}
 }

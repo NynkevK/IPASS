@@ -39,11 +39,8 @@ public class LidDAO extends BaseDAO{
 			while(rs.next()) {
 				String naam = rs.getString("name");
 				int nummer = rs.getInt("lidNummer");
-				String username = rs.getString("username");
-				String password = rs.getString("password");
-				String role = rs.getString("role");
 				
-				Lid newLid = new Lid(naam, nummer, username, password, role);
+				Lid newLid = new Lid(naam, nummer);
 				
 				results.add(newLid);
 			}
@@ -58,13 +55,50 @@ public class LidDAO extends BaseDAO{
 		return getAlleLeden("SELECT * FROM lid;");
 	}
 	
-	public Lid getLidByNummer(int nummer) {
-		List<Lid> results = getAlleLeden("SELECT * FROM lid WHERE lidnummer = " + nummer + "");
-        if(results.size() == 0){
-            return null;
-        } else {
-            return getAlleLeden("SELECT * FROM lid WHERE lidnummer = " + nummer + "").get(0);
-        }
+	public Lid getLidByNummer(int nummer) {		
+		Lid result = null;
+		
+		try (Connection con = super.getConnection()) {
+			Statement stmt = con.createStatement();
+			ResultSet rs = stmt.executeQuery("SELECT * FROM lid WHERE lidnummer = " + nummer + ";");
+			
+			while(rs.next()) {
+				String naam = rs.getString("naam");
+				int lidnummer = rs.getInt("lidnummer");
+				
+				System.out.println("LidDAO:");
+				System.out.println(naam);
+				System.out.println(lidnummer);
+				
+				result = new Lid(naam, lidnummer);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		System.out.println("LidDAO result:");
+		System.out.println(result);
+		return result;
+        
+	}
+	
+	public String getRoleByUsername(String username){
+		String result = "";
+		
+		try (Connection con = super.getConnection()) {
+			Statement stmt = con.createStatement();
+			ResultSet rs = stmt.executeQuery("SELECT role FROM lid WHERE username = '" + username + "';");
+			
+			while(rs.next()) {
+				String role = rs.getString("role");
+				
+				result = role;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return result;
 	}
 	
 	public List<Lid> getLedenByDate(String datum) {

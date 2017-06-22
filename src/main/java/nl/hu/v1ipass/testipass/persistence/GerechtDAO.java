@@ -15,8 +15,7 @@ public class GerechtDAO extends BaseDAO{
 	public Gerecht save(Gerecht gerecht){
         String query = "INSERT INTO gerecht(name, datum, lidNummer) VALUES ('"
                 + gerecht.getName() + "', '"
-                + gerecht.getDatum() + "', '"
-                + gerecht.getEter() + "', '";
+                + gerecht.getDatum() + "', '";
          
         try (Connection con = super.getConnection()){
             Statement stmt = con.createStatement();
@@ -29,43 +28,6 @@ public class GerechtDAO extends BaseDAO{
         return (gerecht);
     }
 	
-	public Gerecht update (Gerecht gerecht) {
-		String query = "UPDATE gerecht set name='"+ gerecht.getName()+
-                "', datum='" +gerecht.getDatum()+
-                "' WHERE lidnummer='"+ gerecht.getLidNummer() + "'";
-         
-        try (Connection con = super.getConnection()){
-            Statement stmt = con.createStatement();
-            int aff = stmt.executeUpdate(query);
-            System.out.println("Row(s) affected: "+aff);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-         
-        return gerecht;
-	}
-	
-	public boolean delete(Gerecht gerecht){
-        boolean result = false;
-        boolean gerechtExists = lidDAO.getLidByNummer(gerecht.getLidNummer()) != null;
-         
-        if (gerechtExists){
-            String queryGerecht = "DELETE FROM gerecht WHERE lidnummer = " + gerecht.getLidNummer() + " AND datum = " + gerecht.getDatum();
-            
-            try (Connection con = getConnection()) {
-                 
-                Statement stmt = con.createStatement();
-                if (stmt.executeUpdate(queryGerecht) == 1) { // 1 row updated!
-                    result = true;
-                }
-            } catch (SQLException sqle) {
-                sqle.printStackTrace();
-            }             
-        }
-         
-        return result;
-    }
-	
 	public List<Gerecht> getAlleGerechten (String query) {		
 		List<Gerecht> results = new ArrayList<Gerecht>();
 		
@@ -75,12 +37,9 @@ public class GerechtDAO extends BaseDAO{
 			
 			while(rs.next()) {
 				String naam = rs.getString("naam");
-				int nummer = rs.getInt("lidnummer");
 				String datum = rs.getString("datum");
 				
-				Lid eter = lidDAO.getLidByNummer(nummer);
-				
-				Gerecht newGerecht = new Gerecht(datum, naam, eter);
+				Gerecht newGerecht = new Gerecht(datum, naam);
 				
 				results.add(newGerecht);
 			}
@@ -95,8 +54,30 @@ public class GerechtDAO extends BaseDAO{
 		return getAlleGerechten("SELECT * FROM gerecht;");
 	}
 	
-	public List<Gerecht> getGerechtenByDate (String datum) {
-		return getAlleGerechten("SELECT * FROM gerecht WHERE datum = " + datum + ";");
+	public List<Gerecht> getGerechtenByDate (String datum) {		
+		List<Gerecht> results = new ArrayList<Gerecht>();
+		
+		try (Connection con = super.getConnection()) {
+			Statement stmt = con.createStatement();
+			ResultSet rs = stmt.executeQuery("SELECT * FROM gerecht WHERE datum = '" + datum + "';");
+			
+			while(rs.next()) {
+				String naam = rs.getString("naam");
+				String date = rs.getString("datum");
+				
+				System.out.println("GerechtDAO:");
+				System.out.println(naam);
+				System.out.println(date);
+				
+				Gerecht newGerecht = new Gerecht(date, naam);
+				
+				results.add(newGerecht);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return results;
 	}
 	
 	public Gerecht getNaamById(int id) {
@@ -106,6 +87,32 @@ public class GerechtDAO extends BaseDAO{
 		} else {
 			return getAlleGerechten("SELECT naam FROM gerecht WHERE id = " + id + ";").get(0);
 		}
+	}
+	
+	public Gerecht getIdByNaamDatum(String naam, String datum) {
+		Gerecht results = null;
+		
+		try (Connection con = super.getConnection()) {
+			Statement stmt = con.createStatement();
+			ResultSet rs = stmt.executeQuery("SELECT * FROM gerecht WHERE datum = '" + datum + "' AND naam = '" + naam + "';");
+			
+			while(rs.next()) {
+				String name = rs.getString("naam");
+				String date = rs.getString("datum");
+				
+				System.out.println("GerechtDAO:");
+				System.out.println(name);
+				System.out.println(date);
+				
+				Gerecht newGerecht = new Gerecht(date, name);
+				
+				results = newGerecht;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return results;
 	}
 		
 	}

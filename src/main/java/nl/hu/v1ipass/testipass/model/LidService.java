@@ -16,4 +16,8 @@ public class LidService {
 	public List<Lid> getLedenDatum(String datum) {
 		return lidDAO.getLedenByDate(datum);
 	}
+	
+	public String getRole(String username) {
+		return lidDAO.getRoleByUsername(username);
+	}
 }

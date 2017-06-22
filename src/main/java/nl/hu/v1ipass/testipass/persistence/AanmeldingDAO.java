@@ -40,7 +40,34 @@ public class AanmeldingDAO extends BaseDAO {
 	}
 	
 	public List<Aanmelding> getAanmeldingByDate (String datum) {
-		return alleAanmeldingen("SELECT lid.lidnummer, lid.naam, gerecht.naam FROM lid, gerecht, aanmelding WHERE lid.lidnummer = aanmelding.lidnummer AND gerecht.id = aanmelding.gerechtid AND gerecht.datum = '" + datum + "';");
+		List<Aanmelding> results = new ArrayList<Aanmelding>();
+		
+		try (Connection con = super.getConnection()) {
+			Statement stmt = con.createStatement();
+			ResultSet rs = stmt.executeQuery("SELECT lid.lidnummer, lid.naam AS lidnaam, gerecht.naam AS gerechtnaam FROM lid, gerecht, aanmelding WHERE lid.lidnummer = aanmelding.lidnummer AND gerecht.id = aanmelding.gerechtid AND gerecht.datum = '" + datum + "';");
+			
+			while(rs.next()) {
+				int lidnummer = rs.getInt("lidnummer");
+				String lidnaam = rs.getString("lidnaam");
+				String gerechtId = rs.getString("gerechtnaam");
+				
+				System.out.println("AanmeldingDAO:");
+				System.out.println(lidnummer);
+				System.out.println(lidnaam);
+				System.out.println(gerechtId);
+				
+				Lid eter = lidDAO.getLidByNummer(lidnummer);
+				Gerecht gerecht = new Gerecht(gerechtId);
+
+				Aanmelding newAanmelding = new Aanmelding(lidnummer, eter, gerecht);
+				
+				results.add(newAanmelding);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return results;
 	}
 	
 	public List<Aanmelding> getAlleAanmeldingen () {
@@ -64,5 +91,30 @@ public class AanmeldingDAO extends BaseDAO {
 		return newAanmelding;
 	}
 	
+	public boolean addAanmelding (Aanmelding a) {
+		
+		System.out.println(a);
+		System.out.println(a.getGerecht());
+		
+		int eter = a.getEter().getLidNummer();
+		int id = a.getGerecht().getId();
+		
+		System.out.println("addAanmelding:");
+		System.out.println(eter);
+		System.out.println(id);
+		
+		 String query = "INSERT INTO aanmelding (\"lidnummer\", \"gerechtid\") VALUES (" + eter + ", " + id + ";";
+	         
+	        try (Connection con = super.getConnection()){
+	            Statement stmt = con.createStatement();
+	            stmt.executeUpdate(query);
+	            
+	            return true;
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	        }
+	         
+	        return false;
+	}
 	
 }
